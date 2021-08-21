@@ -6,15 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8-puzzle</title>
     <link rel="stylesheet" href="./style/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+    <link rel="manifest" href="icon/site.webmanifest">
+    <link rel="mask-icon" href="icon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 </head>
 <body>
-    <div id="container">
-        <div id="puzzle"></div>
-    </div>
     
+    <div id="container">
+        <div id="puzzle-container" class="inline-container">
+            <span id="menu-title"><h2>8-Puzzle</h2></span>
+            <div id="puzzle"></div>
+            <div id="puzzle-controls">
+                <button onclick="resetPuzzle()">Reset</button>
+                <button onclick="shufflePuzzle()">Shuffle</button>
+                <button onclick="solvePuzzle()">Solve</button>
+            </div>
+        </div>
+        <div id="analytics-container" class="inline-container">
+            <h3>Analytics</h3>
+            <div class="analytics-container">
+                <h4>Direct Solver</h4>
+                Solution cost: <span id="direct-solution-cost">0</span> <br>
+                Nodes created: <span id="direct-nodes-created">0</span> <br>
+                Branching rate: <span id="direct-branching-rate">0</span> <br>
+            </div>
+            <div class="analytics-container">
+                <h4>Invert Solver</h4>
+                Solution cost: <span id="invert-solution-cost">0</span> <br>
+                Nodes created: <span id="invert-nodes-created">0</span> <br>
+                Branching rate: <span id="invert-branching-rate">0</span> <br>
+            </div>
+            <div id="general-solution" class="analytics-container">
+                <h4>Solution</h4>
+                Iteration (per solver): <span id="tot-iterations">0</span> <br>
+                Solution cost: <span id="solution-cost">0</span> <br>
+                Admissible solution: <span id="admissible-solution">-</span> <br>
+                Solvers have found common state: <span id="solvers-met">-</span> <br>
+            </div>
+        </div>
+    </div>
+    Tip: <i>Use arrow keys to move the tiles</i> 
+    <div id="links">
+        <a href="pages/about.html">About this project</a> 
+        <a href="pages/documentation.html">Documentation</a> 
+    </div>
+
+    <div class="separator">
+        <hr>
+        <h3 class="subSection">Related projects</h3>
+    </div>
+    standard vs bidirectional
+    change heuristic
+
     <script src="./script/model.js"></script>
     <script src="./script/search.js"></script>
     <script src="script/keyboardListener.js"></script>
     <script src="./script/test.js"></script>
+    <script src="./script/userFunctions.js"></script>
 </body>
 </html>

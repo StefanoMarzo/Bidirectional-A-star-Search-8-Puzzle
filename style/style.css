@@ -1,0 +1,383 @@
+body{
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+    background-color: #fff;
+    color: #000;
+}
+.layer{
+    position: relative;
+    display: block;
+    margin-top: 0px;
+}
+.neuron{
+    position: relative;
+    height: 55px;
+    width: 55px;
+    border-radius: 55px;
+    background-color: #035b96;
+    line-height: 55px;
+    margin: 20px 20px;
+    color: #fff;
+    display: inline-block;
+}
+table{
+    position: relative;
+    display: block;
+    text-align: center;
+    margin: auto;
+}
+td, th{
+    padding: 0px 10px 0px 10px;
+}
+select, option{
+    border-radius: 5px;
+    border: 1px solid #035b96;
+}
+input, select, option{
+    font-family: 'Nunito', sans-serif;
+}
+.weigth{
+    margin-top: 20px;
+    display: inline-block;
+}
+.neuron span{
+    letter-spacing: -1px;
+}
+#menu-controls{
+    width: 100%;
+    max-width: 900px;
+    text-align: left;
+}
+#menu-title{
+    display: inline-block;
+    
+}
+#n-examples{
+    display: inline-block;
+
+}
+#logicGateSelector{
+    top:0px;
+    text-align: center;
+    border-radius: 10px;
+    position: fixed;
+    width: 280px;
+    padding: 10px;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -1000%;
+    transition: all 0.3s ease;
+    z-index: 100;
+    background-color: #ffffff;
+    -webkit-box-shadow: 0px 0px 46px -27px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 46px -27px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 46px -27px rgba(0,0,0,0.75);
+}
+#logicGateSelector i{
+    color: red;
+}
+.jsLink{
+    text-decoration: underline;
+    cursor: pointer;
+    margin: 4px;
+    color: #7d7d7d;
+}
+.selectedOperator{
+    background-color: #035b96!important;
+    color: #fff!important;
+}
+.activated{
+    background-color: rgb(65, 178, 65)!important;
+}
+.target{
+    border: 4px solid rgb(154, 241, 154);
+}
+.separator{
+    margin-top: 25px;
+}
+.separator hr { 
+    display: block; 
+    height: 1px;
+    border: 0; 
+    border-top: 1px solid #ccc;
+    margin: 1em 0; 
+    padding: 0;
+}
+.subSection{
+    position: relative;
+    background-color: #fff;
+    max-width: 200px;
+    margin: auto;
+    margin-top: -30px;
+}
+.info{
+    color: #ccc;
+    border: 1.5px solid #ccc;
+    display: inline-block;
+    border-radius: 30px;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    line-height: 15px;
+    font-size: 13px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+.info .infotext{
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 30px;
+    background-color: #fff;
+    padding: 5px 15px;
+    border: 1.5px solid #656565;
+    border-radius: 5px;
+    color: #656565;
+    max-width: 250px;
+    text-align: justify;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15.3px;
+    line-height: 20px;
+    font-style: normal;
+    z-index: 98;
+}
+.info:hover .infotext{
+    display: block;
+}
+.info:hover{
+    color: #656565;
+    border: 1.5px solid #656565;
+}
+.operatorSelector{
+    display: inline-block;
+    padding: 10px;
+    background-color: #ceeaff;
+    color: #035b96;
+    margin: 5px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+.operatorSelector:hover{
+    color: #fff;
+    background-color: #035b96!important;
+}
+
+#opacityDiv{
+    top:0px;
+    opacity: 0.2;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    margin-top: -1000%;
+    z-index: 99;
+}
+#changeGateControl, #changeGateControl span, #controls .jsLink{
+    font-family: 'Nunito', sans-serif!important;
+    font-style: normal!important;
+}
+#gateText{
+    font-size: 16px;
+    background-color: #ceeaff;
+    color: #035b96;
+    padding: 3px 7px;
+    margin: 5px;
+    border-radius: 30px;
+}
+
+button, input{
+    background-color: transparent;
+    color: #035b96;
+    border: 1.5px solid #035b96;
+    border-radius: 5px;
+    padding: 5px;
+}
+input[type=number] {
+    border: 1px solid #ccc!important;
+    color: #000!important;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+button{
+    cursor: pointer;
+    margin: 6px;
+    transition: all 0.5s ease;
+    font-weight: bold;
+    width: 70px;
+}
+button:hover{
+    color: #fff;
+    background-color: #035b96;
+}
+
+.neuron span{
+    color: #000;
+}
+
+#ANNinfo, #menu-controls{
+    display: inline-block;
+}
+table{
+    color: #aaa;
+}
+#times{
+    width: 60px;
+}
+#controls .jsLink{
+    font-size: 16px;
+}
+#menu-title h2{
+    position: relative;
+    top:2px;
+    display: inline-block;
+}
+
+th, .neuron span, #trainAndTest span{
+    font-family: 'Noto Serif', serif;
+    font-style: italic;
+}
+#trainAndTest{
+    color: #000;
+    text-align: left;
+}
+.infoANN, .infoANN span{
+    font-family: 'Nunito', sans-serif!important;
+    font-style: normal!important;
+}
+.infoANN span{
+    font-weight: bold;
+}
+#trainAndTest td {
+    padding: 4px 4px;
+}
+  #ANN{
+      display: inline-block;
+  }
+  #doc-container, #doc-header{
+      max-width: 800px;
+      text-align: justify;
+      margin: auto;
+      padding: 5px 20px;
+      font-size: 18px;
+      
+  }
+  #doc-container{
+      margin-bottom: 150px;
+  }
+  figure{
+      text-align: center;
+      padding: 10px 0px;
+  }
+  figure img{
+    max-width: 400px;
+    margin: auto;
+  }
+  figcaption{
+      color: #7d7d7d;
+  }
+  table.illustrate{
+      border: 1px solid #7d7d7d;
+      display: inline-block;
+      color: #000;
+      margin: 15px;
+  }
+table.illustrate td{
+    border: 1px solid #7d7d7d;
+}
+table.illustrate th{
+    font-family: 'Nunito', sans-serif;
+    color: #035b96;
+    font-style: normal;
+    border: 1px solid #7d7d7d;
+}
+table.illustrate th i{
+    color:#03961a;
+    font-style: normal;
+}
+.quote{
+    font-style: italic;
+    font-weight: bold;
+}
+.in-bl{
+    display: inline-block;
+}
+.center-equation{
+    line-height: 40px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.center-equation .MathJax{
+    margin: 0px 30px;
+}
+.mathSerif{
+    font-family: 'Times New Roman', Times, serif;
+}
+a, a:visited{
+    color: #035b96;
+}
+.puzzle-cell{
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    font-size: 35px;
+    border: 2.5px solid #000;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+}
+
+#container{
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+}
+
+#container > * {
+    vertical-align: middle;
+}
+
+#puzzle-controls{
+    text-align: left;
+    margin: 20px 0px;
+}
+
+
+.inline-container{
+    display: inline-block;
+    width: 300px;
+    text-align: left;
+}
+.analytics-container{
+    display: inline-block;
+    max-width: 150px;
+    margin: 10px 15px 10px 0px;
+    font-size: 13.5px;
+}
+.analytics-container span {
+    font-weight: bold;
+}
+h4 {
+    margin: 10px 0px;
+}
+h3{
+    margin: 0px;
+}
+#general-solution{
+    max-width: 300px;
+}
+
+#analytics-container{
+    padding: 8px;
+    background-color: #daf0ff;
+    border-radius: 10px;
+}
