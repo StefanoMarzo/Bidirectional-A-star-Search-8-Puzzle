@@ -79,6 +79,7 @@ class BestFirstSolver{
         this.randomPuzzle = randomPuzzle;
         this.dimension = randomPuzzle.size;
         this.stack = new Stack();
+        this.solution = [];
         this.stateTable = new StateTable();
         let p = new Puzzle(this.dimension);
         p.generate();
@@ -122,12 +123,6 @@ class BestFirstSolver{
             for(let stateDirection of nextPossibleStates) {
                 this.createNode(stateDirection.state, stateDirection.direction, node);
             }
-
-            while(this.stack.stack.length > 500) {
-                this.stack.pop();
-                //this.stateTable.states[this.stack.pop().state] = null
-            }
-
         }
     }
 
@@ -138,7 +133,7 @@ class BestFirstSolver{
     search() {
         let next = this.stack.getNext();
         while(!this.isGoal(next.state)) {
-            console.log(this.iterationsCount);
+            //console.log(this.iterationsCount);
             this.expand(next);
             next = this.stack.getNext();
             this.iterationsCount+=1;
@@ -153,6 +148,10 @@ class BestFirstSolver{
             node = node.parent;
         }
         return directions;
+    }
+
+    calcSolution() {
+        this.solution = this.solve(this.search());
     }
 
     distance(state) {

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ANN Documentation</title>
+        <meta charset="utf8">
+        <link rel="stylesheet" href="../style/style.css">
+        <link rel="stylesheet" type="text/css" href="../style/prism.css">
+        <script src="../scripts/prism.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
+        <script>
+            MathJax = {
+              tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+              }
+            };
+          </script>
+            
+    </head>
+    <body>
+      <div id="doc-header">
+        <h2>8-Puzzle Search Algorithm Documentation</h2>
+    </div>
+    <div id="doc-container">
+        <h3>The search algorithm</h3>
+        <p>
+            To solve the 8-Puzzle problem the <b>A* Search algorithm</b> has been used in its <i>standard</i> form.
+            One can define a function $f(n) = g(n) + h(n)$ where:
+            <ul>
+                <li>$g(n)$ is the path cost of the node $n$</li>
+                <li>$h(n)$ is the heuristic function calculated on the state of the node $n$</li>
+            </ul>
+
+        </p>
+
+        <figure>
+          <img src="../images/Artificial_Neural_Network.jpg" alt="Artificial Neural Network model">
+          <figcaption>Fig.1 - Artificial Neural Network model.</figcaption>
+        </figure> 
+
+        
+      <pre class="language-javascript"><code>/**
+* Learning rate
+*/
+const learning_rate = 0.5;
+
+/**
+ * calculate the delta parameter used to update weights
+ */
+function delta(y, z){
+    return (output_layer[z]-objective[z]) * 
+      output_layer[z] * (1-output_layer[z]) * hidden_layer[y];
+}
+
+/**
+ * calculate the numeric derivative of the total error
+ * with respect to w_ho[y][z].
+ * The value is multiplied by learning_rate and is
+ * used to update the weight w_ho[y][z].
+ */
+function newWho(y, z){
+    return delta(y, z)*learning_rate;
+}
+
+/**
+ * calculate the numeric derivative of the total error
+ * with respect to w_ih[x][y].
+ * The value is multiplied by learning_rate and is
+ * used to update the weight w_ih[x][y].
+ */
+function newWih(x,y){
+    let sum = 0;
+    for(let z = 0; z < o_length; z++) {
+        sum += delta(y,z) * (1 - hidden_layer[y]) * 
+          w_ho[y][z] * input_layer[x];
+    }
+    return sum * learning_rate;  
+}</code></pre>
+   
+    </div>
+    </body>
+</html>

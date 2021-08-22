@@ -23,16 +23,14 @@
             <h3>Introduction</h3>
             <p>
                 8-Puzzle Search is a lightweight, easy to use project developed to share a simple
-                implementation of a <b>bidirectional breadth-first search</b> algorithm. 
+                implementation of a <b>bidirectional A* search</b> algorithm. 
                 The project is coded using only client web technologies
                 such as <b>Javascript</b> and it doesn't require a server to elaborate data.
             </p>
             <p>
-                The 8-Puzzle problem has been choosen to test the algorithm because of its peculiar 
-                properties.
-                An 8-Puzzle is game consisting of a 3 x 3 grid containing one empty space and eight moving tiles, 
-                each numbered from 1 to 8.
-                The aim of the game is to move the tiles around into different positions using the empty space
+                An 8-Puzzle is game consisting of a $3 \times 3$ grid containing one empty space and eight moving tiles, 
+                each numbered from $1$ to $8$.
+                The aim of the game is to move the tiles into different positions using the empty space
                 to reach a grid configuration in which the tiles are ordered.
                 
             </p>
@@ -42,7 +40,7 @@
               </figure> 
             <h3>The 8-Puzzle problem</h3>
             <p>
-                An 8-Puzzle tiles configuration can be called <b>state</b>. In a 3 x 3 space one could calculate
+                An 8-Puzzle tiles configuration can be called <b>state</b>. In a $3 \times 3$ space one could calculate
                 $9! = 362880$ possible configurations, but one can only reach half i.e. $9!/2 = 181440$ of the possible
                 states starting from one initial configuration and considering the constraint of moving the tiles
                 using only the empty space.
@@ -56,72 +54,36 @@
                 avoiding to reach the same state more than one time within the execution (if no valid moves can be 
                 executed, the process is interrupted).
             </p>
+            <figure>
+                <img src="../images/8-puzzle-states-set.jpg" alt="8-Puzzle states set">
+                <figcaption>Fig.2 - 8-Puzzle states set representation.</figcaption>
+            </figure> 
+            <h3>The searching algorithm</h3>
             <p>
-                Logic operators can be fully described using <b>Truth Tables</b>, the latter display
-                all the combinations of the logical variables the take as input and the output 
-                expected for each one of them.
-                <i>Complex operators can always be reduced to a longer expression using only a single
-                    operator (NAND).</i> 
+                The 8-Puzzle problem belongs to a class of problems that could be solved using search. 
+                The <b>solution</b> is a list of moves that allow to reach the goal state from the initial state.
+                This particular problem can be solved using a <b>bidirectional search algorithm</b>.
+                Since the search algorithm could be applied to go from a generic state $S_1$ to a another state $S_2$,
+                it could also be applied backwards starting from $S_2$ and attaining $S_1$.
+            </p>
+            <p>
+                Implementing the bidirectional search algorithm, two solvers will apply a forward search from $S_1$ to
+                $S_2$ and a backward search from $S_2$ to $S_1$ respectively.
+                These two solvers will reach the same intermediate state $S_m$ and the combination of the path produced
+                will be elaborated to form the solution.
             </p>
             <figure>
-                <table class="illustrate">
-                    <tr><th>A</th><th>B</th><th>A <i>XOR</i> B</th></tr>
-                    <tr><td>1</td><td>1</td><td>0</td></tr>
-                    <tr><td>1</td><td>0</td><td>1</td></tr>
-                    <tr><td>0</td><td>1</td><td>1</td></tr>
-                    <tr><td>0</td><td>0</td><td>0</td></tr>
-                </table>
-                <table class="illustrate">
-                    <tr><th>A</th><th>B</th><th>A <i>NAND</i> B</th></tr>
-                    <tr><td>1</td><td>1</td><td>0</td></tr>
-                    <tr><td>1</td><td>0</td><td>1</td></tr>
-                    <tr><td>0</td><td>1</td><td>1</td></tr>
-                    <tr><td>0</td><td>0</td><td>1</td></tr>
-                </table>
-                <figcaption>Tab 1 - Truth Tables of XOR and NAND operators.</figcaption>
-            </figure>
-            <h3>The Artificial Neural Network</h3>
-            <p>
-                The ANN proposed aims to simulate the behaviour of the most common binary logic
-                gates E.g. <b>AND</b>, <b>OR</b>, <b>NAND</b>, <b>NOR</b>, <b>XOR</b> ... 
-            </p>
-            <p>
-                The model implemented is a classic <b>Input-Hidden-Output</b> layers neural network 
-                with <b>no bias</b> neurons.
-                The Input layer has two neurons, as well as the output layer. The hidden layer
-                uses a variable number of neurons that the user can set (using less then 3 
-                hidden neurons results in an insufficient space of development and inaccurate 
-                predictions). 
-            </p>
-            <figure>
-                <img src="../images/Artificial_Neural_Network.jpg" alt="Artificial Neural Network model">
-                <figcaption>Fig.2 - Artificial Neural Network model.</figcaption>
+                <img src="../images/bidirectional-algorithm.jpg" alt="Bidirectional search algorithm representation">
+                <figcaption>
+                    Fig.3 - Bidirectional search algorithm representation: 
+                    two solvers find the same intermediate state $S_m$.
+                </figcaption>
             </figure> 
             <p>
-                Once selected the logic gate to simulate, users can set the input using the option fields
-                within the input neurons.
-                By clicking the <b>train</b> button the system will generate a training example in form of 
-                <b>input and objective</b>. The objective is automatically calculated according to the gate selected
-                using an actual <b>logic expression</b>.
-                The (Input, Objective) tuple will be propagated in the ANN, and the output <b>activation</b> result 
-                will be used to correct the weights and decrease the total error.
+                The advantages of using a bidirectional search algorithm instead of a <i>standard</i> search algorithm 
+                is to considerably reduce the computational resources needed to solve the problem. More technical details 
+                can be found in the <b>related project</b> section of the <a href="../index.html">project page</a>.
             </p>
-            <figure>
-                <img src="../images/neurons_and_weights.JPG" alt="Neurons and weights">
-                <figcaption>Fig.3 - Neurons and weights.</figcaption>
-              </figure> 
-            <p>
-                One can simply train the ANN using <b>random examples</b>, there is an input field to set the number
-                of training data that will be propagated in the ANN. The total data propagated will be counted
-                in a provided field. Users can check the <b>accuracy value</b> to monitor the reliability of
-                the machine in the current state.
-                The accuracy, in this case, is the total <b>distance</b> of the ANN from a <b>perfect approximation</b> of
-                the logical operator. 
-            </p>
-            <figure>
-                <img src="../images/activation.JPG" alt="Activation of output layer">
-                <figcaption>Fig.4 - Activation of the output layer.</figcaption>
-            </figure> 
         </div>
     </body>
 </html>

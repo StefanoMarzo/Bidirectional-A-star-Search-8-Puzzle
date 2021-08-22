@@ -45,15 +45,15 @@ function solvePuzzle() {
 
     let i = 0;
 
-    function myLoop() {         //  create a loop function
-        setTimeout(function() {   //  call a 3s setTimeout when the loop is called
-            p.move(b.solution[i]);   //  your code here
-            i++;                    //  increment the counter
-            if (i < b.solution.length) {           //  if the counter < 10, call the loop function
-                myLoop();             //  ..  again which will trigger another 
-            }                       //  ..  setTimeout()
+    function solveStep() {                  //  create a function
+        setTimeout(function() {             //  initialize a setTimeout
+            p.move(b.solution[i]);          //  execute instructions
+            i++;                            //  increment the counter
+            if (i < b.solution.length) {    //  recursive if controller 
+                solveStep();                //  recursive call 
+            }                       
         }, 300)
     }   
-    myLoop(); 
+    solveStep(); 
     showAnalytics(b);
 }

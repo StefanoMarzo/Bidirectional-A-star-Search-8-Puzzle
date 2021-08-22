@@ -279,7 +279,7 @@ th, .neuron span, #trainAndTest span{
       padding: 10px 0px;
   }
   figure img{
-    max-width: 400px;
+    max-width: 550px;
     margin: auto;
   }
   figcaption{
@@ -372,7 +372,7 @@ h4 {
 h3{
     margin: 0px;
 }
-#general-solution{
+#general-solution, #standard-solution{
     max-width: 300px;
 }
 
@@ -380,4 +380,7 @@ h3{
     padding: 8px;
     background-color: #daf0ff;
     border-radius: 10px;
+}
+#notes{
+    margin: 20px;
 }
