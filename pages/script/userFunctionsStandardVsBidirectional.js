@@ -76,8 +76,8 @@ function solvePuzzle() {
     stdStart = window.performance.now();
     bStandard.calcSolution();
     stdEnd = window.performance.now();
-    bSize = memorySizeOf(b);
-    sSize = memorySizeOf(bStandard);
+    bSize = formatByteSize(memorySizeOf(b));
+    sSize = formatByteSize(memorySizeOf(bStandard));
     showAnalytics(b, bStandard, end-start, stdEnd-stdStart, bSize, sSize);
 }
 
@@ -109,13 +109,15 @@ function memorySizeOf(obj) {
         }
         return bytes;
     };
-
-    function formatByteSize(bytes) {
-        if(bytes < 1024) return bytes + " bytes";
-        else if(bytes < 1048576) return(bytes / 1024).toFixed(3) + " KiB";
-        else if(bytes < 1073741824) return(bytes / 1048576).toFixed(3) + " MiB";
-        else return(bytes / 1073741824).toFixed(3) + " GiB";
-    };
-
-    return formatByteSize(sizeOf(obj));
+    return sizeOf(obj);
 };
+function formatByteSize(bytes) {
+    if(bytes < 1024) return bytes + " bytes";
+    else if(bytes < 1048576) return(bytes / 1024).toFixed(3) + " KiB";
+    else if(bytes < 1073741824) return(bytes / 1048576).toFixed(3) + " MiB";
+    else return(bytes / 1073741824).toFixed(3) + " GiB";
+};
+
+/* Test */
+var s = new SearchAlgorithmComparisonTest(3,1000,100000);
+//s.test();

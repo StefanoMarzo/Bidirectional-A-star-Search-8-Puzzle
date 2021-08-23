@@ -1,5 +1,6 @@
-const memLimit = 10000;
-var p = new Puzzle(3);
+const memLimit = 10000000;
+const puzzleSize = 3;
+var p = new Puzzle(puzzleSize);
 p.getHtml();
 
 function resetPuzzle() {
@@ -37,7 +38,7 @@ function showAnalytics(b) {
 }
 
 function solvePuzzle() {
-    var solved = new Puzzle(3);
+    var solved = new Puzzle(puzzleSize);
     var b = new BidirectionalBestFirstSolver(p, solved, memLimit);
     b.search();
     console.log(b.logAnalytics());

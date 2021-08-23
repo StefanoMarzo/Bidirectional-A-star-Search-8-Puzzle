@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8-Puzzle Search</title>
+    <title>8-Puzzle A* Search vs Bidirectional A* Search</title>
     <link rel="stylesheet" href="../style/style.css">
     <link rel="apple-touch-icon" sizes="180x180" href="../icon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../icon/favicon-32x32.png">
@@ -73,14 +73,130 @@
 
     </div>
     <div id="notes">
-        <b>N.B.</b> <i>Please note that standard search could take up to 30s to complete.</i><br>
+        <b>N.B.</b> <i>Please note that standard search could take up to <b>30s</b> to complete.</i><br>
         <b>Tip:</b> <i>Use arrow keys to move the tiles.</i> 
     </div>
 
     <div id="doc-container">
-        <h3>Comparing search strategies</h3> 
-        
+        <br>
+        <h3>Comparing search strategies</h3>
+        <p>
+        <b>A* Search</b> is one of the most popular <b> graph search</b> algorithms, it is <b>complete</b> since 
+        it always produces a result when there is one and it is <b>optimal</b> since it
+        finds always the best solution (the <b>heuristic function</b> used is admissible).
+        One can evaluate the performance of an algorithm by monitoring the following parameters:
+        <ul>
+            <li>
+                $d$ is the depth of the shallowest solution.
+            </li>
+            <li>
+                $b$ is the maximum branching factor i.e. the maximum number of child nodes.
+            </li>
+        </ul>
+        </p>
+        <p>
+            For a finite node space $N$ and a <b>null</b> heuristic function $h(n) = 0 $ $\forall n \in N$
+            one can calculate that the time needed to solve the problem is $O(b^d)$ and the space is also $O(b^d)$.
+            A well developed heuristic function could determine a decrease of the $b$ factor but generally it is
+            difficult to analytically calculate the impact of $h$ over the branching factor.
+        </p>
+        <p> Applying a <b>Bidirectional Search</b> algorithm lead to considerably reduce the time and space consumed
+            without losing completeness and only introducing small consideration on optimality.
+            It consist in two different solvers which aim to find a solution path from the initial state to the
+            goal state and from the goal state to the initial state respectively.
+        </p>
+        <figure>
+            <img src="../images/bidirectional-algorithm.jpg" alt="Bidirectional search algorithm representation">
+            <figcaption>
+                Fig.1 - Bidirectional search algorithm representation: 
+                two solvers find the same intermediate state $S_m$.
+            </figcaption>
+        </figure> 
+        <p>
+            Intuitively, one can represent a tree expansion in a circle where the depth is distributed over the 
+            circumference. Using graph search the solution depth is proportional to the circle radius and 
+            the number of expanded nodes is proportional to the area of the circle.
+        </p>
+        <figure>
+            <img src="../images/graph-representation.jpg" alt="Graph search representation">
+            <figcaption>
+                Fig.2 - Circular graph search representation.
+            </figcaption>
+        </figure> 
+        <p>
+            The idea of bidirectional search is supported by the fact that the area $A$ of a circle
+            with radius $r$ is twice bigger than the sum of the areas of two circles with radius $r/2$.
+            circumferences since $2\pi(\frac{r}{2})^2 = \pi\frac{r^2}{2}$.
+            This applies only in case that the direct and invert solver reaches the same depth (balanced solution).
+        </p>
+        <figure>
+            <img src="../images/circles-area-difference.jpg" alt="Circles area comparison">
+            <figcaption>
+                Fig.3 - Circles area comparison.
+            </figcaption>
+        </figure> 
+        <p>
+            Considering a null heuristic $h = 0$, the bidirectional search algorithm leads to produce a solution
+            with both space and time complexity of $O(b^{d/2})$ which is a substantial reduction compared to the 
+            non-bidirectional algorithms.
+        </p>
+        <p>
+            Bidirectional search algorithms could not produce an optimal solution because the nodes explored
+            in the interface between the two circles of node spaces could not follow the shortest path to the circumference.
+            This minor issue can be solved running a complete A* search algorithm to get the optimal path between the nodes.
+            This will introduce a (in most cases) negligible amount of computational space and time to the complexity estimation.
+        </p>
+        <h3>Benchmarks</h3>
+        <p>
+            One thousand executions have been conducted to compare the performances of the two algorithms, the results 
+            are shown below.
+            <table class="illustrate">
+                <tr>
+                    <th>Average for <br> 1000 executions</th>
+                    <th>A* Search</th>
+                    <th>A* Bidirectional Search</th>
+                    <th>Imrpovement</th>
+                </tr>
+                <tr>
+                    <th>Solution cost</th>
+                    <td class="best-result">21.84</td>
+                    <td>22.26 (10.85 + 11.41)</td>
+                    <td class="deterior"> &#9662;1.89%</td>
+                </tr>
+                <tr>
+                    <th>Node created</th>
+                    <td>14254.57</td>
+                    <td class="best-result">1317.61 (642.229 + 675.312)</td>
+                    <td class="improve">&#9652;1081.85%</td>
+                </tr>
+                <tr>
+                    <th>Iterations</th>
+                    <td>9701.32</td>
+                    <td class="best-result">809.06</td>
+                    <td class="improve">&#9652;1199.08%</td>
+                </tr>
+                <tr>
+                    <th>Branching factor</th>
+                    <td  class="best-result">1.532</td>
+                    <td>1.635 avg(1.611, 1.695)</td>
+                    <td class="deterior"> &#9662;6.29%</td>
+                </tr>
+                <tr>
+                    <th>Execution time</th>
+                    <td>3317.23ms</td>
+                    <td  class="best-result">255.87ms</td>
+                    <td class="improve">&#9652;1296.45%</td>
+                </tr>
+                <tr>
+                    <th>Execution memory</th>
+                    <td>31.171MiB</td>
+                    <td  class="best-result">1.769MiB</td>
+                    <td class="improve">&#9652;1762.07%</td>
+                </tr>
+            </table>
+        </p>
     </div>
+
     
     <div id="links">
         Go back to: <a href="../index.html">8-Puzzle project page</a> 

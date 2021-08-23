@@ -1,29 +1,51 @@
-//test variables
-
-//Test 3*3
-
-//var pState = [[ 8, 5, 2 ],[ 4, 3, 6 ],[ 1, 7, 0 ]];
-//p.loadState(pState);
-
-
-
-/*
-//Test BestFirstSolver
-var b = new BestFirstSolver(p, solved);
-let solution = b.solve(b.search());
-p.getHtml();
-
-
-for(let i = solution.length-1; i >= 0; i--) {
-    //p.move(solution[i]);
-    //p.getHtml();
+class BestFirstSolverTest{
+    constructor(dimension, numberOfTestsToRun, memLimit) {
+        this.dimension = dimension;
+        this.numberOfTestsToRun = numberOfTestsToRun;
+        this.memLimit = memLimit;
+        this.solution = [];
+        this.nodeCreated = [];
+        this.iterations = [];
+        this.expansion = [];
+        this.blockedByMemory = [];
+        this.noAdmissibleSolution = [];
+        this.timeConsumed = [];
+        this.spaceConsumed = [];
+    }
+    updateAnalytics(solver, time) {
+        this.solution.push(solver.solution.length);
+        this.nodeCreated.push(solver.nodeCreated);
+        this.iterations.push(solver.iterationsCount);
+        this.expansion.push(solver.getAverageExpansion());
+        this.blockedByMemory.push((solver.blockedByMemory) ? 1 : 0);
+        this.noAdmissibleSolution.push((solver.noAdmissibleSolution) ? 1 : 0);
+        this.timeConsumed.push(time);
+        this.spaceConsumed.push(memorySizeOf(solver));
+    }
+    logAnalytics() {
+        let s = 'TEST: A* Search, number of executions: ' + this.numberOfTestsToRun + '\n';
+        s += 'solution cost: ' + this.avg(this.solution).toFixed(2) + '\n';
+        s += 'node created: ' + this.avg(this.nodeCreated).toFixed(2) + '\n';
+        s += 'iterations: ' + this.avg(this.iterations).toFixed(2) + '\n';
+        s += 'branching factor: ' + this.avg(this.expansion).toFixed(3) + '\n';
+        s += 'computational time: ' + this.avg(this.timeConsumed).toFixed(2) + '\n';
+        s += 'computational space: ' + formatByteSize(this.avg(this.spaceConsumed)) + '\n';
+        return s;
+    }
+    avg(list) {
+        let sum = 0;
+        for(let el of list) sum += el;
+        return sum/this.numberOfTestsToRun;
+    }
+    test(puzzle, solved) {
+        let bfs = new BestFirstSolver(puzzle, solved, this.memLimit);
+        let start = performance.now();
+        bfs.calcSolution();
+        let end = performance.now();
+        this.updateAnalytics(bfs, end-start);
+        //console.log(this.logAnalytics());
+    }
 }
-*/
-
-//Test BidirectionalBestFirstSolver
-
-
-//console.log(solution);
 
 class BidirectionalBestFirstSolverTest{
 
@@ -31,85 +53,90 @@ class BidirectionalBestFirstSolverTest{
         this.dimension = dimension;
         this.numberOfTestsToRun = numberOfTestsToRun;
         this.memLimit = memLimit;
-        this.directSolution = 0;
-        this.invertSolution = 0;
-        this.solution = 0;
-        this.directSolverNodeCreated = 0;
-        this.invertSolverNodeCreated = 0;
-        this.iterations = 0;
-        this.directExpansion = 0;
-        this.invertExpansion = 0;
-        this.blockedByMemory = 0;
-        this.noAdmissibleSolution = 0;
-        this.statesHasMet = 0;
-        this.solvedWithoutMet = 0;
+        this.directSolution = [];
+        this.invertSolution = [];
+        this.solution = [];
+        this.directSolverNodeCreated = [];
+        this.invertSolverNodeCreated = [];
+        this.iterations = [];
+        this.directExpansion = [];
+        this.invertExpansion = [];
+        this.statesHasMet = [];
+        this.timeConsumed = [];
+        this.spaceConsumed = [];
     }
 
-    updateAnalytics(solution) {
-        this.directSolution += solution.directSolution.length;
-        this.invertSolution += solution.invertSolution.length;
-        this.solution += solution.solution.length;
-        this.directSolverNodeCreated += solution.directSolver.nodeCreated;
-        this.invertSolverNodeCreated += solution.invertSolver.nodeCreated;
-        this.iterations += solution.directSolver.iterationsCount;
-        this.directExpansion += solution.directSolver.getAverageExpansion();
-        this.invertExpansion += solution.invertSolver.getAverageExpansion();
-        if(solution.blockedByMemory) this.blockedByMemory += 1;
-        if(solution.noAdmissibleSolution) this.noAdmissibleSolution += 1;
-        if(solution.statesHasMet) this.statesHasMet += 1;
-        if(this.solvedWithoutMet) this.solvedWithoutMet += 1;
+    updateAnalytics(solver, time) {
+        this.directSolution.push(solver.directSolution.length);
+        this.invertSolution.push(solver.invertSolution.length);
+        this.solution.push(solver.solution.length);
+        this.directSolverNodeCreated.push(solver.directSolver.nodeCreated);
+        this.invertSolverNodeCreated.push(solver.invertSolver.nodeCreated);
+        this.iterations.push(solver.directSolver.iterationsCount);
+        this.directExpansion.push(solver.directSolver.getAverageExpansion());
+        this.invertExpansion.push(solver.invertSolver.getAverageExpansion());
+        this.statesHasMet.push((solver.statesHasMet) ? 1 : 0);
+        this.timeConsumed.push(time);
+        this.spaceConsumed.push(memorySizeOf(solver));
     }
-
-    averageAnalytics() {
-        this.directSolution /= this.numberOfTestsToRun;
-        this.invertSolution /= this.numberOfTestsToRun;
-        this.solution /= this.numberOfTestsToRun;
-        this.directSolverNodeCreated /= this.numberOfTestsToRun;
-        this.invertSolverNodeCreated /= this.numberOfTestsToRun;
-        this.directExpansion /= this.numberOfTestsToRun;
-        this.iterations /= this.numberOfTestsToRun;
-        this.invertExpansion /= this.numberOfTestsToRun;
-        /*this.blockedByMemory /= this.numberOfTestsToRun;
-        this.noAdmissibleSolution /= this.numberOfTestsToRun;
-        this.statesHasMet /= this.numberOfTestsToRun;
-        this.solvedWithoutMet /= this.numberOfTestsToRun;*/
+    avg(list) {
+        let sum = 0;
+        for(let el of list) sum += Number(el);
+        return sum/list.length;
     }
-
-    test() {
-        var bbfs, p;
-        var solved = new Puzzle(this.dimension);
-        for(let i = 0; i < this.numberOfTestsToRun; i++) {
-            p = new Puzzle(this.dimension);
-            p.shuffle();
-            bbfs = new BidirectionalBestFirstSolver(p, solved, this.memLimit);
-            bbfs.search();
-            //console.log(bbfs.logAnalytics());
-            this.updateAnalytics(bbfs);
-        }
-        this.averageAnalytics();
-        console.log(this.logAnalytics());
+    test(puzzle, solved) {
+        var bbfs = new BidirectionalBestFirstSolver(puzzle, solved, this.memLimit);
+        let start = performance.now();
+        bbfs.search();
+        let end = performance.now();
+        this.updateAnalytics(bbfs, end-start);
+        //console.log(this.logAnalytics());
     }
 
     logAnalytics() {
-        let s = '';
-        s += 'direct solution cost: ' + this.directSolution + '\n';
-        s += 'invert solution cost: ' + this.invertSolution + '\n';
-        s += 'solution cost: ' + this.solution + '\n';
-        s += 'direct solver node created: ' + this.directSolverNodeCreated + '\n';
-        s += 'direct & invert solver iterations: ' + this.iterations + '\n';
-        s += 'invert solver node created: ' + this.invertSolverNodeCreated + '\n';
-        s += 'direct solver branching rate: ' + this.directExpansion + '\n';
-        s += 'invert solver branching rate: ' + this.invertExpansion + '\n';
-        s += 'blocked by memory: ' + this.blockedByMemory + '/' + this.numberOfTestsToRun + '\n';
-        s += 'no admissible solution: ' + this.noAdmissibleSolution + '/' + this.numberOfTestsToRun + '\n';
-        s += 'states has met in the middle: ' + this.statesHasMet + '/' + this.numberOfTestsToRun + '\n';
-        s += 'solved without states met: ' + this.solvedWithoutMet + '/' + this.numberOfTestsToRun + '\n';
+        let dSol = this.avg(this.directSolution).toFixed(2);
+        let iSol = this.avg(this.invertSolution).toFixed(2);
+        let dNodes = this.avg(this.directSolverNodeCreated);
+        let iNodes = this.avg(this.invertSolverNodeCreated);
+        let dBranch = this.avg(this.directExpansion).toFixed(3);
+        let iBranch = this.avg(this.invertExpansion).toFixed(3);
+        let s = 'TEST: Bidirectional A* Search, number of executions: ' + this.numberOfTestsToRun + '\n';
+        s += 'solution cost (d + i): ' + this.avg(this.solution).toFixed(2) + 
+                ' (' + dSol + ' + ' + iSol + ') ' + '\n';
+        s += 'node created (d + i): ' + (Number(dNodes) + Number(iNodes)) + 
+                ' (' + dNodes +  ' + ' + iNodes +') ' + '\n';
+        s += 'iterations (d + i): ' + this.avg(this.iterations).toFixed(2)*2 + 
+                ' (' + this.avg(this.iterations).toFixed(2) + ' * 2)' + '\n';
+        s += 'average branching factor (d + i): ' + this.avg([dBranch, iBranch]).toFixed(3)
+                + ' avg(' + dBranch + ', ' + iBranch + ')\n';
+        s += 'states has met in the middle: ' + (this.avg(this.statesHasMet)*100).toFixed(1) + '%\n';
+        s += 'computational time: ' + this.avg(this.timeConsumed).toFixed(2) + '\n';
+        s += 'computational space: ' + formatByteSize(this.avg(this.spaceConsumed)) + '\n';
         return s;
     }
 
 }
 
-//var b = new BidirectionalBestFirstSolverTest(3, 1)
-//b.test();
+class SearchAlgorithmComparisonTest{
+    constructor(dimension, numberOfTestsToRun, memLimit) {
+        this.dimension = dimension;
+        this.numberOfTestsToRun = numberOfTestsToRun;
+        this.memLimit = memLimit;
+    }
 
+    test() {
+        let b = new BestFirstSolverTest(this.dimension, this.numberOfTestsToRun, this.memLimit);
+        let bb = new BidirectionalBestFirstSolverTest(this.dimension, this.numberOfTestsToRun, this.memLimit);
+        let s = new Puzzle(this.dimension);
+        for(let i = 0; i < this.numberOfTestsToRun; i++) {
+            let p = new Puzzle(this.dimension);
+            p.shuffle();
+            b.test(p, s);
+            bb.test(p, s);
+        }
+        console.log(b.logAnalytics());
+        console.log(bb.logAnalytics());
+    }
+
+}
 

@@ -326,9 +326,9 @@ a, a:visited{
     color: #035b96;
 }
 .puzzle-cell{
-    width: 80px;
-    height: 80px;
-    line-height: 80px;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
     font-size: 35px;
     border: 2.5px solid #000;
     position: relative;
@@ -383,4 +383,13 @@ h3{
 }
 #notes{
     margin: 20px;
+}
+.best-result{
+    background-color: #e3ffe7;
+}
+.improve{
+    color: #03961a;
+}
+.deterior{
+    color: rgb(219, 48, 48);
 }
